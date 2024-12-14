@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = '777t5'
@@ -20,7 +20,7 @@ def index():
             return redirect(url_for('responder_view'))
         else:
             return redirect(url_for('user_view'))
-    return render_template('index.html')
+    return render_template('login.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -59,7 +59,8 @@ def create_ticket():
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
-        tickets.append({'title': title, 'description': description, 'creator': session['username'], 'response': None})
+        creation_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        tickets.append({'title': title, 'description': description, 'creator': session['username'], 'creation_date': creation_date, 'response': None})
         return redirect(url_for('user_view'))
     return render_template('create_ticket.html')
 
@@ -79,11 +80,15 @@ def ticket_view(ticket_id):
     if 'username' not in session:
         return redirect(url_for('login'))
     ticket = tickets[ticket_id]
+    if session['role'] == 'user' and ticket['creator'] != session['username']:
+        return redirect(url_for('user_view'))
     return render_template('ticket_view.html', ticket=ticket, ticket_id=ticket_id)
 
 @app.route('/ticket_response/<int:ticket_id>')
 def ticket_response_view(ticket_id):
     if 'username' not in session:
+        return redirect(url_for('login'))
+    if session['role'] != 'responder':
         return redirect(url_for('login'))
     ticket = tickets[ticket_id]
     return render_template('ticket_response_view.html', ticket=ticket, ticket_id=ticket_id)

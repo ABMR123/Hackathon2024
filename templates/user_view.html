@@ -1,19 +1,152 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Tickets</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #007BFF; /* Blue background */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .ticket-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .ticket-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .ticket-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        .ticket-item span {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #000000; /* Black text for ticket names */
+        }
+        .manage-btn {
+            background-color: #28a745; /* Green buttons */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1em;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .manage-btn:hover {
+            background-color: #218838; /* Darker green for hover */
+            transform: scale(1.05);
+        }
+        .manage-btn:active {
+            transform: scale(1);
+        }
+        .ticket-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Create Ticket Button - Floating */
+        .create-ticket-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007BFF; /* Blue background */
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .create-ticket-btn:hover {
+            background-color: #0056b3; /* Darker blue for hover */
+            transform: scale(1.05);
+        }
+        .create-ticket-btn:active {
+            transform: scale(1);
+        }
+
+        /* Logout Button - Floating */
+        .logout-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #dc3545; /* Red background */
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .logout-btn:hover {
+            background-color: #c82333; /* Darker red for hover */
+            transform: scale(1.05);
+        }
+        .logout-btn:active {
+            transform: scale(1);
+        }
+    </style>
 </head>
 <body>
-    <h1>Your Tickets</h1>
-    <ul>
-    {% for ticket in tickets %}
-        <li><strong>{{ ticket.title }}</strong>: {{ ticket.description }}<br>
-            <em>Response: {{ ticket.response }}</em><br>
-            <a href="{{ url_for('ticket_view', ticket_id=loop.index0) }}">View Ticket</a></li>
-    {% endfor %}
+
+<header>
+    Your Tickets
+</header>
+
+<div class="container">
+    <ul class="ticket-list">
+        {% for ticket in tickets %}
+            <li class="ticket-item">
+                <span>{{ ticket.title }} - Created on: {{ ticket.creation_date }}</span>
+                <a href="{{ url_for('ticket_view', ticket_id=loop.index0) }}" class="manage-btn">Manage</a>
+            </li>
+        {% endfor %}
     </ul>
-    <a href="{{ url_for('create_ticket') }}">Create Ticket</a>
-    <br>
-    <a href="{{ url_for('logout') }}">Logout</a>
+</div>
+
+<!-- Create Ticket Button -->
+<button class="create-ticket-btn" onclick="location.href='{{ url_for('create_ticket') }}'">Create Ticket</button>
+
+<!-- Logout Button -->
+<button class="logout-btn" onclick="location.href='{{ url_for('logout') }}'">Logout</button>
+
 </body>
 </html>

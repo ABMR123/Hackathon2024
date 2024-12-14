@@ -1,15 +1,145 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket Details</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            flex-direction: column;
+        }
+        header {
+            background-color: #007BFF; /* Blue background */
+            color: white;
+            padding: 20px;
+            font-size: 2.5em;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            position: fixed;
+            top: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 80px; /* Space from the fixed header */
+            width: 80%;
+            max-width: 700px;
+        }
+        .ticket-detail {
+            margin-bottom: 20px;
+            text-align: left;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+        .ticket-detail span {
+            font-weight: normal;
+            color: #555;
+        }
+
+        /* Logout button - Positioned bottom left */
+        .bottom-left-btns {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn {
+            padding: 12px 25px;
+            font-size: 1.2em;
+            color: white;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .logout-btn {
+            background-color: #dc3545; /* Red background for logout */
+        }
+        .logout-btn:hover {
+            background-color: #c82333; /* Darker red for hover */
+            transform: scale(1.05);
+        }
+        .logout-btn:active {
+            transform: scale(1);
+        }
+
+        /* Back button - Positioned bottom right */
+        .back-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            background-color: #007BFF; /* Blue background for back */
+            color: white;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .back-btn:hover {
+            background-color: #0056b3; /* Darker blue for hover */
+            transform: scale(1.05);
+        }
+        .back-btn:active {
+            transform: scale(1);
+        }
+    </style>
 </head>
 <body>
-    <h1>Ticket Details</h1>
-    <p><strong>Title:</strong> {{ ticket.title }}</p>
-    <p><strong>Description:</strong> {{ ticket.description }}</p>
-    <p><strong>Creator:</strong> {{ ticket.creator }}</p>
-    <p><strong>Response:</strong> {{ ticket.response }}</p>
-    <a href="{{ url_for('responder_view') }}">Back to All Tickets</a>
-    <a href="{{ url_for('logout') }}">Logout</a>
+
+<header>
+    Ticket Details
+</header>
+
+<div class="container">
+    <div class="ticket-detail">
+        <strong>Title:</strong> <span>{{ ticket.title }}</span>
+    </div>
+    <div class="ticket-detail">
+        <strong>Description:</strong> <span>{{ ticket.description }}</span>
+    </div>
+    <div class="ticket-detail">
+        <strong>Creator:</strong> <span>{{ ticket.creator }}</span>
+    </div>
+    <div class="ticket-detail">
+        <strong>Created on:</strong> <span>{{ ticket.creation_date }}</span>
+    </div>
+    <div class="ticket-detail">
+        <strong>Response:</strong> <span>{{ ticket.response }}</span>
+    </div>
+</div>
+
+<!-- Logout button - bottom left -->
+<div class="bottom-left-btns">
+    <button class="btn logout-btn" onclick="location.href='{{ url_for('logout') }}'">Logout</button>
+</div>
+
+<!-- Back button - bottom right -->
+<button class="back-btn" onclick="goBack()">Back</button>
+
+<script>
+    // Function to handle "Back" button click
+    function goBack() {
+        window.history.back(); // Go back to the previous page in the browser history
+    }
+</script>
+
 </body>
 </html>

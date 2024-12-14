@@ -1,19 +1,172 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Respond to Ticket</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Response Page</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #3f51b5;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #3f51b5;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .ticket-info {
+            background-color: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 6px solid #3f51b5;
+        }
+
+        .ticket-info p {
+            margin: 8px 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .ticket-info p strong {
+            color: #3f51b5;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: #3f51b5;
+            outline: none;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #3f51b5;
+            color: white;
+            font-size: 16px;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #303f9f;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .ticket-info p {
+                font-size: 14px;
+            }
+
+            button {
+                width: 100%;
+                font-size: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Respond to Ticket</h1>
-    <p><strong>Title:</strong> {{ ticket.title }}</p>
-    <p><strong>Description:</strong> {{ ticket.description }}</p>
-    <form method="post" action="{{ url_for('respond_ticket', ticket_id=ticket_id) }}">
-        <label for="response">Response</label>
-        <textarea name="response" id="response">{{ ticket.response }}</textarea>
-        <br>
-        <button type="submit">Submit Response</button>
-    </form>
-    <a href="{{ url_for('responder_view') }}">Back to All Tickets</a>
-    <a href="{{ url_for('logout') }}">Logout</a>
+
+    <div class="container">
+        <h1>Ticket Response</h1>
+
+        <div class="ticket-info">
+            <h2>Ticket Details</h2>
+            <p><strong>Title:</strong> {{ ticket.title }}</p>
+            <p><strong>Description:</strong> {{ ticket.description }}</p>
+            <p><strong>Creator:</strong> {{ ticket.creator }}</p>
+            <p><strong>Date Submitted:</strong> {{ ticket.creation_date }}</p>
+        </div>
+
+        <form method="post" action="{{ url_for('respond_ticket', ticket_id=ticket_id) }}">
+            <div class="form-group">
+                <label for="response">Your Response:</label>
+                <textarea id="response" name="response" placeholder="Type your response here...">{{ ticket.response }}</textarea>
+            </div>
+
+            <button type="submit">Submit Response</button>
+        </form>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Support Ticket System. All rights reserved.</p>
+    </div>
+
 </body>
 </html>

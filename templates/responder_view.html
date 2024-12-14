@@ -1,18 +1,97 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>All Tickets</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tickets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            position: absolute;
+            left: 20px; /* Positioning the logout button to the left */
+            top: 50%; /* Centering the button vertically */
+            transform: translateY(-50%);
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+        main {
+            padding: 20px;
+        }
+        .ticket-list {
+            list-style: none;
+            padding: 0;
+        }
+        .ticket-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ticket-name {
+            font-size: 18px;
+        }
+        .view-btn, .respond-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        .view-btn:hover, .respond-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>All Tickets</h1>
-    <ul>
-    {% for ticket in tickets %}
-        <li><strong>{{ ticket.title }}</strong> by {{ ticket.creator }}: {{ ticket.description }}<br>
-            <em>Response: {{ ticket.response }}</em><br>
-            <a href="{{ url_for('ticket_view', ticket_id=loop.index0) }}">View Ticket</a>
-            <a href="{{ url_for('ticket_response_view', ticket_id=loop.index0) }}">Respond to Ticket</a></li>
-    {% endfor %}
-    </ul>
-    <a href="{{ url_for('logout') }}">Logout</a>
+
+    <header>
+        <button class="logout-btn" onclick="location.href='{{ url_for('logout') }}'">Log Out</button>
+        <h1>Tickets</h1>
+    </header>
+
+    <main>
+        <ul class="ticket-list">
+            {% for ticket in tickets %}
+                <li class="ticket-item">
+                    <span class="ticket-name">{{ ticket.title }} - <strong>{{ ticket.creator }}</strong></span>
+                    <div>
+                        <a href="{{ url_for('ticket_view', ticket_id=loop.index0) }}" class="view-btn">View Ticket</a>
+                        <a href="{{ url_for('ticket_response_view', ticket_id=loop.index0) }}" class="respond-btn">Respond to Ticket</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </main>
+
 </body>
 </html>

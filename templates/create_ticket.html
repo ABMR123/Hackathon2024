@@ -1,18 +1,176 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Create Ticket</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Times New Roman', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #ffffff;
+            color: black;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #ffffff;
+            outline: none;
+            background-color: #fff;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* Stylish Button */
+        .btn {
+            background-color: #4CAF50; /* Green background */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #45a049; /* Darker green on hover */
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            background-color: #3e8e41; /* Even darker green when clicked */
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #ffffff;
+            color: black;
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Create a New Ticket</h1>
-    <form method="post">
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title">
-        <br>
-        <label for="description">Description</label>
-        <textarea name="description" id="description"></textarea>
-        <br>
-        <button type="submit">Create Ticket</button>
-    </form>
+    <!-- Header Section -->
+    <header>
+        <h1>Create a New Ticket</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2>Create Ticket</h2>
+        <form method="post" action="{{ url_for('create_ticket') }}">
+            <!-- Ticket Title -->
+            <div class="form-group">
+                <label for="title">Ticket Title</label>
+                <input type="text" id="title" name="title" required="" placeholder="Enter a brief title for the issue">
+            </div>
+
+            <!-- Ticket Description -->
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" required="" placeholder="Describe the issue or request"></textarea>
+            </div>
+
+            <!-- Stylish Submit Button -->
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>© 2024 Ticket System</p>
+    </footer>
 </body>
 </html>
