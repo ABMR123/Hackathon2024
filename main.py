@@ -41,6 +41,7 @@ class OrderData:
 # Blockchain Network
 blockchain = [create_genesis_block()]
 peers = set()
+peers = {"10.210.7.146"}
 
 def add_block(data):
     global previous_block
@@ -53,7 +54,7 @@ def broadcast_block(block):
     for peer in peers:
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect((peer, 5000))
+                s.connect((peer, 8923))
                 s.sendall(json.dumps(vars(block)).encode('utf-8'))
         except Exception as e:
             print(f"Failed to send block to {peer}: {e}")
@@ -68,7 +69,7 @@ def handle_connection(conn, addr):
 
 def node_listener():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind(('0.0.0.0', 5000))
+        s.bind(('0.0.0.0', 8923))
         s.listen()
         while True:
             conn, addr = s.accept()
@@ -80,17 +81,17 @@ if __name__ == "__main__":
     # Start the node listener thread
     threading.Thread(target=node_listener).start()
 
-    # Add new blocks with supply chain data
-    supply_chain_data = SupplyChainData("product123", "Factory", "Manufactured")
-    add_block(supply_chain_data)
-
-    # Add new order
-    order_data = OrderData("order789", "product123", 100, "Placed")
-    add_block(order_data)
-
-    # Update order status to 'Fulfilled'
-    order_data_fulfilled = OrderData("order789", "product123", 100, "Fulfilled")
-    add_block(order_data_fulfilled)
+    # # Add new blocks with supply chain data
+    # supply_chain_data = SupplyChainData("product123", "Factory", "Manufactured")
+    # add_block(supply_chain_data)
+    #
+    # # Add new order
+    # order_data = OrderData("order789", "product123", 100, "Placed")
+    # add_block(order_data)
+    #
+    # # Update order status to 'Fulfilled'
+    # order_data_fulfilled = OrderData("order789", "product123", 100, "Fulfilled")
+    # add_block(order_data_fulfilled)
 
     print("Supply Chain Blockchain with Orders created!")
     for block in blockchain:
