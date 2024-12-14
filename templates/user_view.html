@@ -7,7 +7,9 @@
     <h1>Your Tickets</h1>
     <ul>
     {% for ticket in tickets %}
-        <li><strong>{{ ticket.title }}</strong>: {{ ticket.description }}</li>
+        <li><strong>{{ ticket.title }}</strong>: {{ ticket.description }}<br>
+            <em>Response: {{ ticket.response }}</em><br>
+            <a href="{{ url_for('ticket_view', ticket_id=loop.index0) }}">View Ticket</a></li>
     {% endfor %}
     </ul>
     <a href="{{ url_for('create_ticket') }}">Create Ticket</a>

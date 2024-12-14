@@ -1,12 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
+app.secret_key = '777t5'
 
 tickets = []
 users = {
-    'user': {'password': 'password', 'role': 'user'},
-    'responder': {'password': 'password', 'role': 'responder'}
+    'user': {'password': generate_password_hash('e'), 'role': 'user'},
+    'responder': {'password': generate_password_hash('e'), 'role': 'responder'},
+    '2': {'password': generate_password_hash('e'), 'role': 'responder'},
+    'jerry': {'password': generate_password_hash('e'), 'role': 'user'}
 }
 
 @app.route('/')
@@ -23,7 +26,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if username in users and users[username]['password'] == password:
+        if username in users and check_password_hash(users[username]['password'], password):
             session['username'] = username
             session['role'] = users[username]['role']
             return redirect(url_for('index'))
@@ -55,22 +58,34 @@ def create_ticket():
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
-        tickets.append({'title': title, 'description': description, 'creator': session['username']})
+        tickets.append({'title': title, 'description': description, 'creator': session['username'], 'response': None})
         return redirect(url_for('user_view'))
     return render_template('create_ticket.html')
 
-@app.route('/add_user', methods=['GET', 'POST'])
-def add_user():
+@app.route('/respond_ticket/<int:ticket_id>', methods=['GET', 'POST'])
+def respond_ticket(ticket_id):
     if 'username' not in session or session['role'] != 'responder':
         return redirect(url_for('login'))
+    ticket = tickets[ticket_id]
     if request.method == 'POST':
-        new_username = request.form['new_username']
-        new_password = request.form['new_password']
-        new_role = request.form['new_role']
-        if new_username not in users:
-            users[new_username] = {'password': new_password, 'role': new_role}
-            return redirect(url_for('responder_view'))
-    return render_template('add_user.html')
+        response = request.form['response']
+        tickets[ticket_id]['response'] = response
+        return redirect(url_for('responder_view'))
+    return render_template('respond_ticket.html', ticket=ticket, ticket_id=ticket_id)
+
+@app.route('/ticket/<int:ticket_id>')
+def ticket_view(ticket_id):
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    ticket = tickets[ticket_id]
+    return render_template('ticket_view.html', ticket=ticket, ticket_id=ticket_id)
+
+@app.route('/ticket_response/<int:ticket_id>')
+def ticket_response_view(ticket_id):
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    ticket = tickets[ticket_id]
+    return render_template('ticket_response_view.html', ticket=ticket, ticket_id=ticket_id)
 
 if __name__ == '__main__':
     app.run(debug=True)

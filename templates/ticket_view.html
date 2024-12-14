@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+    <title>Ticket Response</title>
+</head>
+<body>
+    <h1>Respond to Ticket</h1>
+    <p><strong>Title:</strong> {{ ticket.title }}</p>
+    <p><strong>Description:</strong> {{ ticket.description }}</p>
+    <form method="post" action="{{ url_for('respond_ticket', ticket_id=ticket_id) }}">
+        <label for="response">Response</label>
+        <textarea name="response" id="response">{{ ticket.response }}</textarea>
+        <br>
+        <button type="submit">Submit Response</button>
+    </form>
+    <a href="{{ url_for('responder_view') }}">Back to All Tickets</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
