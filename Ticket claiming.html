@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>New Ticket</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Times New Roman', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #ffffff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #ffffff;
+            outline: none;
+            background-color: #fff;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* Priority Select */
+        .form-group select {
+            padding: 12px;
+            background-color: #ffffff;
+        }
+
+        /* Submit Button */
+        .form-group input[type="submit"] {
+            background-color: #ffffff;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #ffffff;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #ffffff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: 1rem;
+            }
+
+            .form-group input[type="submit"] {
+                font-size: 1rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Ticket Creation Portal</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2>Create a New Ticket</h2>
+        <form action="submit_ticket.php" method="post">
+            <!-- Ticket Title -->
+            <div class="form-group">
+                <label for="ticketTitle">Ticket Title</label>
+                <input type="text" id="ticketTitle" name="ticketTitle" required placeholder="Enter a brief title for the issue">
+            </div>
+
+            <!-- Ticket Description -->
+            <div class="form-group">
+                <label for="ticketDescription">Description</label>
+                <textarea id="ticketDescription" name="ticketDescription" required placeholder="Describe the issue or request"></textarea>
+            </div>
+
+            <!-- Ticket Priority -->
+            <div class="form-group">
+                <label for="ticketPriority">Priority Level</label>
+                <select id="ticketPriority" name="ticketPriority" required>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Urgent">Urgent</option>
+                </select>
+            </div>
+
+            <!-- User Name -->
+            <div class="form-group">
+                <label for="userName">Your Name</label>
+                <input type="text" id="userName" name="userName" required placeholder="Enter your name">
+            </div>
+
+            <!-- User Email -->
+            <div class="form-group">
+                <label for="userEmail">Your Email</label>
+                <input type="email" id="userEmail" name="userEmail" required placeholder="Enter your email address">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <input type="submit" value="Create Ticket">
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; Logged in</p>
+    </footer>
+
+</body>
+</html>
