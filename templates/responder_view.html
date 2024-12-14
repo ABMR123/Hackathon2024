@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+    <title>All Tickets</title>
+</head>
+<body>
+    <h1>All Tickets</h1>
+    <ul>
+    {% for ticket in tickets %}
+        <li><strong>{{ ticket.title }}</strong>: {{ ticket.description }}</li>
+    {% endfor %}
+    </ul>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
