@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = '777t5'
+app.secret_key = 'i4jg4wujgerhjgreuwjgur'
 
 tickets = []
 users = {
@@ -20,7 +19,7 @@ def index():
             return redirect(url_for('responder_view'))
         else:
             return redirect(url_for('user_view'))
-    return render_template('login.html')
+    return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -33,11 +32,24 @@ def login():
             return redirect(url_for('index'))
     return render_template('login.html')
 
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        role = request.form['role']
+        if username not in users:
+            users[username] = {'password': generate_password_hash(password), 'role': role}
+            session['username'] = username
+            session['role'] = role
+            return redirect(url_for('index'))
+    return render_template('signup.html')
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     session.pop('role', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route('/user_view')
 def user_view():
@@ -59,8 +71,7 @@ def create_ticket():
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
-        creation_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        tickets.append({'title': title, 'description': description, 'creator': session['username'], 'creation_date': creation_date, 'response': None})
+        tickets.append({'title': title, 'description': description, 'creator': session['username'], 'response': None})
         return redirect(url_for('user_view'))
     return render_template('create_ticket.html')
 

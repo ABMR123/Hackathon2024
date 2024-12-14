@@ -77,8 +77,6 @@
             background-color: #fff;
         }
 
-
-
         /* Submit Button */
         .form-group input[type="submit"] {
             background-color: #007BFF;
@@ -117,6 +115,19 @@
                 padding: 20px;
             }
         }
+        /* Link Styles */
+        .signup-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .signup-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -142,12 +153,12 @@
                 <input type="password" id="password" name="password" required="" placeholder="Enter your password">
             </div>
 
-
             <!-- Submit Button -->
             <div class="form-group">
                 <input type="submit" value="Login">
             </div>
         </form>
+        <a href="{{ url_for('signup') }}" class="signup-link">Don't have an account? Sign up here</a>
     </div>
 
     <!-- Footer Section -->
