@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+    <title>Ticket System</title>
+</head>
+<body>
+    <h1>Ticket List</h1>
+    <ul>
+    {% for ticket in tickets %}
+        <li><strong>{{ ticket.title }}</strong>: {{ ticket.description }}</li>
+    {% endfor %}
+    </ul>
+    <a href="{{ url_for('create_ticket') }}">Create Ticket</a>
+</body>
+</html>
